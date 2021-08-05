@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git</title>
+    <style>
+        body {font-size: 15px;}
+        .wrap {width:1000px; margin: 0 auto;}
+        article {margin:30px 0;}
+        .ps {display: block;padding: 5px 0;color: grey; font-size: .8em;}
+        .ps::before {display: inline-block; content: '*'; padding-right:5px;}
+        .some {color: coral;}
+
+        dl dt {margin-top: 10px;font-weight: bold;}
+        dl dt::before {display: inline-block; content: '|'; padding-right:5px;}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <h1>Git 사용</h1>
+
+    <section>
+        <h2>명령어</h2>
+        <article>
+            <h3>1. 설정과 초기화</h3>
+            <dl>
+                <dt>전역 사용자명/이메일 구성하기</dt>
+                <dd>git config --global user.name 'name'</dd>
+                <dd>git config --global user.email 'address'</dd>
+
+                <dt>저장소별 사용자명/이메일 구성하기 (해당 저장소 디렉터리로 이동후)</dt>
+                <dd>git config user.name 'name'</dd>
+                <dd>git config user.name 'address'</dd>
+                <dd class="ps">user 설정이 되어 있지 않으면 Github에 있는 repository에 변경사항을 푸시 한다고 해도 commit count 집계도 안되고 해당 커밋의 작성자 프로필 아이콘도 ? 로 표시되기 때문에 웬만하면 name과 email 주소를 설정하길 추천</dd>
+
+                <dt>전역 설정 정보 조회</dt>
+                <dd>git config --global --list</dd>
+
+                <dt>저장소별 설정 정보 조회</dt>
+                <dd>git config --list</dd>
+                
+                <dt>Git의 출력결과 색상 활성화하기</dt>
+                <dd>git config --global color.ui 'auto'</dd>
+
+                <dt>새로운 저장소 초기화하기</dt>
+                <dd>mkdir /path/newDir</dd>
+                <dd>cd /path/newDir</dd>
+                <dd>git init</dd>
+
+                <dt>저장소 복제하기</dt>
+                <dd>git clone <span class="some">저장소url</span></dd>
+
+                <dt>새로운 원격 저장소 추가하기</dt>
+                <dd>git remote add <span class="some">원격저장소</span> <span class="some">저장소url</span></dd>
+            </dl>
+        </article>
+
+        <article>
+            <h3>2. 기본적인 사용법</h3>
+            <p>아래에서 []는 선택적 매개변수를 의미함</p>
+            <dl>
+                <dt>새로운 파일을 추가하거나 존재하는 파일 스테이징하고 커밋하기</dt>
+                <dd>git add <span class="some">파일</span></dd>
+                <dd>git commit -m '메시지'</dd>
+
+                <dt>파일의 일부를 스테이징하기</dt>
+                <dd>git add -p [<span class="some">파일</span> [<span class="some">파일</span> [기타파일들…]]]</dd>
+
+                <dt>add 명령에서 Git 대화 모드를 사용하여 파일 추가하기</dt>
+                <dd>git add -i</dd>
+
+                <dt>수정되고 추적되는 파일의 변경 사항 스테이징하기</dt>
+                <dd>git add -u [<span class="some">경로</span> [<span class="some">경로</span>]]</dd>
+
+                <dt>수정되고 추적되는 모든 파일의 변경 사항 커밋하기</dt>
+                <dd>git commit -m '메시지' -a</dd>
+
+                <dt>작업 트리의 변경 사항 돌려놓기</dt>
+                <dd>git checkout HEAD <span class="some">파일</span> [<span class="some">파일</span>]</dd>
+
+                <dt>커밋되지 않고 스테이징된 변경 사항 재설정하기</dt>
+                <dd>git reset HEAD <span class="some">파일</span> [<span class="some">파일</span>]</dd>
+
+                <dt>마지막 커밋 고치기</dt>
+                <dd>git commit -m '메시지' --amend</dd>
+
+                <dt>이전 커밋을 수정하고 커밋 메시지를 재사용하기</dt>
+                <dd>git commit -C HEAD --amend</dd>
+            </dl>
+        </article>
+
+        <article>
+            <h3>3. 브랜치</h3>
+            <dl>
+                <dt>지역 브랜치 목록 보기</dt>
+                <dd>git branch</dd>
+
+                <dt>원격 브랜치 목록 보기</dt>
+                <dd>git branch -r</dd>
+
+                <dt>지역과 원격을 포함한 모든 브랜치 목록 보기</dt>
+                <dd>git branch -a</dd>
+
+                <dt>현재 브랜치에서 새로운 브랜치 생성하기</dt>
+                <dd>git branch <span class="some">새로운브랜치</span></dd>
+
+                <dt>다른 브랜치 체크아웃하기</dt>
+                <dd>git checkout <span class="some">브랜치</span></dd>
+
+                <dt>현재 브랜치에서 새로운 브랜치 생성하고 체크아웃하기</dt>
+                <dd>git checkout -b <span class="some">새로운브랜치</span></dd>
+
+                <dt>다른 시작 지점에서 브랜치 생성하기</dt>
+                <dd>git branch <span class="some">새로운브랜치</span> <span class="some">브랜치를생성할위치</span></dd>
+
+                <dt>브랜치를 옮기거나 브랜치명 변경하기</dt>
+                <dd>git checkout -m <span class="some">기존브랜치</span> <span class="some">새로운브랜치</span> → 새 브랜치가 존재하지 않는 경우</dd>
+                <dd>git checkout -M <span class="some">기존브랜치</span> <span class="some">새로운브랜치</span> → 무조건 덮어쓰기</dd>
+
+                <dt>다른 브랜치를 현재 브랜치로 합치기</dt>
+                <dd>git merge <span class="some">브랜치</span></dd>
+
+                <dt>커밋하지 않고 합치기</dt>
+                <dd>git merge --no-commit <span class="some">브랜치</span></dd>
+                
+                <dt>선택하여 합치기</dt>
+                <dd>git cherry-pick <span class="some">커밋명</span></dd>
+
+                <dt>커밋하지 않고 선택하여 합치기</dt>
+                <dd>git cherry-pick -n <span class="some">커밋명</span></dd>
+
+                <dt>브랜치의 이력을 다른 브랜치에 합치기</dt>
+                <dd>git merge --squash  <span class="some">브랜치</span></dd>
+
+                <dt>브랜치 삭제하기</dt>
+                <dd>git branch -d <span class="some">삭제할브랜치</span> → 삭제할 브랜치가 현재 브랜치에 합쳐졌을 경우에만</dd>
+                <dd>git branch -D <span class="some">삭제할브랜치</span> → 삭제할 브랜치가 현재 브랜치에 합쳐지지 않았어도</dd>
+            </dl>
+        </article>
+
+        <article>
+            <h3>4. Git 이력</h3>
+            <dl>
+                <dt>모든 이력 보기</dt>
+                <dd>git log</dd>
+
+                <dt>변경 사항을 보여주는 패치와 함께 로그 표시하기</dt>
+                <dd>git log -p</dd>
+
+                <dt>1개의 항목만 보이도록 로그 개수 제한하기</dt>
+                <dd>git log -1</dd>
+
+                <dt>20개의 항목과 패치만 보이도록 로그 제한하기</dt>
+                <dd>git log -20 -p</dd>
+
+                <dt>6시간 동안의 커밋 로그 보기</dt>
+                <dd>git log --since='6 hours'</dd>
+
+                <dt>이틀 전까지의 커밋 로그 보기</dt>
+                <dd>git log --before='2 days'</dd>
+
+                <dt>HEAD보다 세 개 이전의 커밋 로그 보기</dt>
+                <dd>git log -1 HEAD-3</dd>
+                <dd>git log -1 HEAD^^^</dd>
+                <dd>git log -1 HEAD~1^^</dd>
+
+                <dt>두 지점 사이의 커밋 로그 보기</dt>
+                <dd>
+                    git log <span class="some">시작지점</span>…<span class="some">끝지점</span>
+                    <span class="ps">시작 지점이나 끝 지점은 커밋명, 브랜치명, 혹은 태그명이 될 수 있고 조합하여 사용 가능하다</span>
+                </dd>
+
+                <dt>각 항목의 로그 이력 한 줄씩 보기</dt>
+                <dd>git log --pretty=oneline</dd>
+
+                <dt>각 항목마다 영향 받은 줄의 통계 보기</dt>
+                <dd>git log --stat</dd>
+
+                <dt>밋할 시점의 파일 상태 보기</dt>
+                <dd>git log --name-status</dd>
+
+                <dt>현재 작업 트리와 인덱스의 차이점 보기</dt>
+                <dd>git diff</dd>
+
+                <dt>인덱스와 저장소의 차이점 보기</dt>
+                <dd>git diff --cached</dd>
+
+                <dt>작업 트리와 저장소의 차이점 보기</dt>
+                <dd>git diff HEAD</dd>
+
+                <dt>작업 트리와 특정 위치 간의 차이점 보기</dt>
+                <dd>
+                    git diff <span class="some">시작지점</span>
+                    <span class="ps">시작 지점은 커밋명 or 브랜치명 or 태그명</span>
+                </dd>
+
+                <dt>저장소의 두 지점 사이의 차이점 보기</dt>
+                <dd>git diff <span class="some">시작지점</span> <span class="some">끝지점</span></dd>
+
+                <dt>차이점의 통계 보기</dt>
+                <dd>git diff - -stat <span class="some">시작지점</span> [<span class="some">끝지점</span>]</dd>
+
+                <dt>파일의 커밋 정보 줄 단위로 보기</dt>
+                <dd>git blame <span class="some">파일</span></dd>
+
+                <dt>파일의 줄 단위의 복사, 붙여 넣기, 이동 정보 보기</dt>
+                <dd>git blame -M <span class="some">파일</span></dd>
+
+                <dt>파일의 줄 단위의 이동과 원본 파일 정보 보기</dt>
+                <dd>git blame -C -C <span class="some">파일</span></dd>
+
+                <dt>로그에서 복사와 붙여 넣은 정보 보기</dt>
+                <dd>git log -C -C -p -1 <span class="some">특정지점</span></dd>
+            </dl>
+        </article>
+
+        <article>
+            <h3>5. 원격 저장소</h3>
+            <dl>
+                <dt>저장소 복제하기</dt>
+                <dd>git clone <span class="some">저장소</span></dd>
+
+                <dt>마지막 200개의 커밋만 포함하여 저장소 복제하기</dt>
+                <dd>git clone --depth 200 <span class="some">저장소</span></dd>
+
+                <dt>새로운 원격 저장소 추가하기</dt>
+                <dd>git remote add <span class="some">원격저장소</span> <span class="some">저장소url</span></dd>
+
+                <dt>원격 브랜치 목록 보기</dt>
+                <dd>git branch -r</dd>
+
+                <dt>원격 브랜치에서 지역 브랜치 생성하기</dt>
+                <dd>git branch <span class="some">새로운브랜치</span> <span class="some">원격브랜치</span></dd>
+
+                <dt>origin 저장소에서 합치지 않고 지역 브랜치로 변경 사항 가져오기</dt>
+                <dd>git fetch</dd>
+
+                <dt>원격 저장소에서 합치지 않고 지역 브랜치로 변경 사항 가져오기</dt>
+                <dd>git fetch <span class="some">원격저장소</span></dd>
+                
+                <dt>원격 저장소에서 변경 사항을 가져와 현재 브랜치에 합치기</dt>
+                <dd>git pull <span class="some">원격저장소</span></dd>
+                
+                <dt>origin 저장소에서 변경 사항을 가져와 현재 브랜치에 합치기</dt>
+                <dd>git pull</dd>
+                
+                <dt>지역 브랜치를 원격 브랜치에 푸싱하기</dt>
+                <dd>git push <span class="some">원격저장소</span> <span class="some">지역브랜치</span>:<span class="some">원격브랜치</span></dd>
+                
+                <dt>지역 브랜치를 동일한 이름의 원격 브랜치에 푸싱하기</dt>
+                <dd>git push <span class="some">원격저장소</span> <span class="some">지역브랜치</span></dd>
+                
+                <dt>새로운 로컬 브랜치를 원격 저장소에 푸싱하기</dt>
+                <dd>git push <span class="some">원격저장소</span> <span class="some">지역브랜치</span></dd>
+                
+                <dt>원격 저장소에서 쓸모가 없어진 원격 브랜치 제거하기</dt>
+                <dd>git remote prune <span class="some">원격저장소</span></dd>
+                
+                <dt>원격 저장소를 제거하고 관련된 브랜치도 제거하기</dt>
+                <dd>git remote rm <span class="some">원격저장소</span></dd>
+            </dl>
+        </article>
+        <p>그 외의 사용법 보기 <a href="https://git-scm.com/docs" target="_blank">Git Reference</a></p>
+    </section>
+</div>
+</body>
+</html>
