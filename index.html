@@ -14,7 +14,7 @@
         .some {color: coral;}
 
         dl dt {margin-top: 10px;font-weight: bold;}
-        dl dt::before {display: inline-block; content: '|'; padding-right:5px;}
+        dl dt::before {display: inline-block; content: '||'; padding-right:5px; color:cadetblue;}
     </style>
 </head>
 <body>
@@ -63,7 +63,7 @@
             <dl>
                 <dt>새로운 파일을 추가하거나 존재하는 파일 스테이징하고 커밋하기</dt>
                 <dd>git add <span class="some">파일</span></dd>
-                <dd>git commit -m '메시지'</dd>
+                <dd>git commit -m '메시지'&nbsp;(git push origin master)</dd>
 
                 <dt>파일의 일부를 스테이징하기</dt>
                 <dd>git add -p [<span class="some">파일</span> [<span class="some">파일</span> [기타파일들…]]]</dd>
